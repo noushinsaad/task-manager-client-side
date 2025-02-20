@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
+import useAuth from "../../hooks/useAuth";
 
 const Settings = () => {
+    const { user } = useAuth()
+
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -22,7 +25,7 @@ const Settings = () => {
                         <label className="block text-sm font-medium text-gray-700">Name</label>
                         <input
                             type="text"
-                            defaultValue="John Doe"
+                            defaultValue={user.displayName}
                             className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
                         />
                     </div>
@@ -30,7 +33,8 @@ const Settings = () => {
                         <label className="block text-sm font-medium text-gray-700">Email</label>
                         <input
                             type="email"
-                            defaultValue="john.doe@example.com"
+                            readOnly
+                            defaultValue={user.email}
                             className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
                         />
                     </div>

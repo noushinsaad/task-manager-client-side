@@ -7,6 +7,33 @@ import logo from "../../assets/logo/icons8-reminders-50.png";
 const Dashboard = () => {
     const { user, logOut } = useAuth();
 
+    const links = <>
+        <NavLink
+            to="/dashboard"
+            className="text-gray-700 hover:text-green-600 transition-colors duration-300"
+        >
+            Overview
+        </NavLink>
+        <NavLink
+            to="/dashboard/tasks"
+            className="text-gray-700 hover:text-green-600 transition-colors duration-300"
+        >
+            Tasks
+        </NavLink>
+        <NavLink
+            to="/dashboard/projects"
+            className="text-gray-700 hover:text-green-600 transition-colors duration-300"
+        >
+            Projects
+        </NavLink>
+        <NavLink
+            to="/dashboard/settings"
+            className="text-gray-700 hover:text-green-600 transition-colors duration-300"
+        >
+            Settings
+        </NavLink>
+    </>
+
     const handleSignOut = () => {
         logOut()
             .then(() => {
@@ -39,30 +66,7 @@ const Dashboard = () => {
 
                     {/* Navigation Links */}
                     <nav className="flex flex-col space-y-4">
-                        <NavLink
-                            to="/dashboard"
-                            className="text-gray-700 hover:text-green-600 transition-colors duration-300"
-                        >
-                            Overview
-                        </NavLink>
-                        <Link
-                            to="/dashboard/tasks"
-                            className="text-gray-700 hover:text-green-600 transition-colors duration-300"
-                        >
-                            Tasks
-                        </Link>
-                        <Link
-                            to="/dashboard/projects"
-                            className="text-gray-700 hover:text-green-600 transition-colors duration-300"
-                        >
-                            Projects
-                        </Link>
-                        <Link
-                            to="/dashboard/settings"
-                            className="text-gray-700 hover:text-green-600 transition-colors duration-300"
-                        >
-                            Settings
-                        </Link>
+                        {links}
                     </nav>
 
                     {/* Logout Button */}
