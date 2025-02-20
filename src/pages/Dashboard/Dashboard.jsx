@@ -89,7 +89,7 @@ const Dashboard = () => {
                         <div className="flex items-center space-x-4">
                             <span className="text-gray-700">{user?.email}</span>
                             <img
-                                src={user.photoURL}
+                                src={user?.photoURL}
                                 alt="Profile"
                                 className="w-10 h-10 rounded-full"
                             />
@@ -97,11 +97,36 @@ const Dashboard = () => {
                     </div>
                 </motion.header>
 
+                {/* Banner */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.4 }}
+                    className="bg-gradient-to-r from-green-400 to-green-600 p-8 mx-6 my-4 rounded-lg shadow-lg"
+                >
+                    <div className="text-white">
+                        <h2 className="text-3xl font-bold mb-4">Welcome Back, {user?.displayName}!</h2>
+                        <p className="text-lg mb-6">
+                            You have <span className="font-semibold">3 pending tasks</span> and{" "}
+                            <span className="font-semibold">2 ongoing projects</span>. Keep up the great work!
+                        </p>
+                        <Link to="/dashboard/tasks">
+                            <motion.button
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                className="bg-white text-green-600 font-semibold py-2 px-6 rounded-lg shadow-md transition-all duration-300"
+                            >
+                                View Tasks
+                            </motion.button>
+                        </Link>
+                    </div>
+                </motion.div>
+
                 {/* Main Content */}
                 <motion.main
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.4 }}
+                    transition={{ duration: 0.5, delay: 0.6 }}
                     className="flex-1 p-8 overflow-y-auto"
                 >
                     <Outlet /> {/* This will render nested routes */}

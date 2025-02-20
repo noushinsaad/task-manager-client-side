@@ -7,6 +7,9 @@ import Login from "../pages/loginAndRegister/Login";
 import LandingPage from "../pages/LandingPage/LandingPage";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import PrivateRoutes from "./PrivateRoutes";
+import Tasks from "../pages/Dashboard/Tasks";
+import Projects from "../pages/Dashboard/Projects";
+import Settings from "../pages/Dashboard/Settintgs";
 
 const Routes = createBrowserRouter([
     {
@@ -30,7 +33,21 @@ const Routes = createBrowserRouter([
     },
     {
         path: 'dashboard',
-        element: <PrivateRoutes><Dashboard></Dashboard></PrivateRoutes>
+        element: <PrivateRoutes><Dashboard></Dashboard></PrivateRoutes>,
+        children: [
+            {
+                path: 'tasks',
+                element: <Tasks></Tasks>
+            },
+            {
+                path: 'projects',
+                element: <Projects></Projects>
+            },
+            {
+                path:'settings',
+                element:<Settings></Settings>
+            }
+        ]
     }
 ])
 
