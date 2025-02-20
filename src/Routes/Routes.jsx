@@ -4,6 +4,9 @@ import {
 import Home from "../layouts/Home";
 import Register from "../pages/loginAndRegister/Register";
 import Login from "../pages/loginAndRegister/Login";
+import LandingPage from "../pages/LandingPage/LandingPage";
+import Dashboard from "../pages/Dashboard/Dashboard";
+import PrivateRoutes from "./PrivateRoutes";
 
 const Routes = createBrowserRouter([
     {
@@ -11,6 +14,10 @@ const Routes = createBrowserRouter([
         element: <Home></Home>,
         errorElement: <h2>Error</h2>,
         children: [
+            {
+                path: '/',
+                element: <LandingPage></LandingPage>
+            },
             {
                 path: 'register',
                 element: <Register></Register>
@@ -20,6 +27,10 @@ const Routes = createBrowserRouter([
                 element: <Login></Login>
             },
         ]
+    },
+    {
+        path: 'dashboard',
+        element: <PrivateRoutes><Dashboard></Dashboard></PrivateRoutes>
     }
 ])
 

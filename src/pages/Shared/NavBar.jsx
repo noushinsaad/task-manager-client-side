@@ -22,13 +22,13 @@ const NavBar = () => {
     };
 
     return (
-        <div className="navbar bg-green-100">
+        <div className="navbar bg-green-100 fixed top-0 left-0 right-0 z-50">
             <div className="flex-1">
-                <a className="btn btn-ghost text-xl flex justify-center items-center">
+                <Link to='/' className="btn btn-ghost text-xl flex justify-center items-center">
                     <img src={logo} alt="" />
-                    TickTack</a>
+                    TickTack</Link>
             </div>
-            <div className="flex-none gap-2">
+            <div className="flex justify-center items-center gap-2">
                 <div className="form-control">
                     <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" />
                 </div>
