@@ -64,83 +64,46 @@ Ensure that you have the following installed:
 ```bash
 git clone https://github.com/your-username/task-manager-client-side.git
 cd task-manager-client-side
+
+
 2️⃣ Install dependencies:
-
-bash
-Copy
-Edit
 npm install
-3️⃣ Set up environment variables:
 
+3️⃣ Set up environment variables:
 Create a .env file in the root directory.
 Add necessary configurations (API URLs, database credentials, etc.).
-4️⃣ Run the application:
 
+4️⃣ Run the application:
 For development:
-bash
-Copy
-Edit
 npm run dev
+
 For production:
-bash
-Copy
-Edit
 npm run build  
 npm run preview  
-5️⃣ Open the app in your browser:
-🔗 http://localhost:3000
+```
 
-📂 Folder Structure
-bash
-Copy
-Edit
-task-manager-client-side/
-├── public/        # Static assets (images, icons, etc.)
-├── src/           # Source code
-│   ├── components/ # Reusable UI components (task cards, forms, etc.)
-│   ├── hooks/      # Custom React hooks
-│   ├── pages/      # Application views (To-Do, In Progress, Done)
-│   ├── services/   # API calls and WebSocket connections
-│   ├── App.js      # Main entry point of the application
-│   ├── index.js    # Entry point for rendering the app
-├── .env           # Environment variables
-├── package.json   # Project metadata and dependencies
-└── vite.config.js # Vite configuration
-📌 Usage
-📝 Add a Task: Enter task details in the "Add Task" section and hit "Enter" to add it to the "To-Do" column.
-✏️ Edit a Task: Click on a task to modify its details.
-🗑 Delete a Task: Click the delete icon next to a task to remove it.
-🔄 Reorder Tasks: Drag and drop tasks between To-Do, In Progress, and Done sections.
-🌍 Real-time Updates: Tasks sync across devices instantly.
 
-🤝 Contributing
+## 📌 Usage
+- 📝 Add a Task: Enter task details in the "Add Task" section and hit "Enter" to add it to the "To-Do" column.
+- ✏️ Edit a Task: Click on a task to modify its details.
+- 🗑 Delete a Task: Click the delete icon next to a task to remove it.
+- 🔄 Reorder Tasks: Drag and drop tasks between To-Do, In Progress, and Done sections.
+- 🌍 Real-time Updates: Tasks sync across devices instantly.
+
+## 🤝 Contributing
 Contributions are welcome! To contribute:
-
+```bash
 Fork the repository.
 Create a new branch:
-bash
-Copy
-Edit
+
 git checkout -b feature/your-feature
 Make your changes and commit:
-bash
-Copy
-Edit
+
 git commit -m "Add new feature"
 Push to your branch:
-bash
-Copy
-Edit
+
+
 git push origin feature/your-feature
 Open a pull request. 🎉
-📜 License
-This project is licensed under the MIT License. See the LICENSE file for more details.
+```
 
-🙌 Acknowledgements
-React
-Vite
-Tailwind CSS
-DaisyUI
-@dnd-kit
-Socket.io
-SweetAlert2
