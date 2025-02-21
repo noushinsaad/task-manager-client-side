@@ -3,7 +3,7 @@
 A modern, feature-rich task management application that allows users to add, edit, delete, and reorder tasks using a drag-and-drop interface. Tasks are categorized into three sections: **To-Do, In Progress, and Done**. All changes are saved instantly to the database for a seamless experience.  
 
 ## 🚀 Live Demo  
-🔗 [Live Application](#) *(Update this with your live link)*  
+🔗 [Live Application](#) *(https://task-manager-bd1a7.web.app)*  
 
 ---
 
