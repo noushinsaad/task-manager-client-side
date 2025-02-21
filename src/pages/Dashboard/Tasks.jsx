@@ -40,11 +40,16 @@ const Tasks = () => {
         return () => socket.off("tasksUpdated");
     }, [queryClient]);
 
-    const handleAddTask = (status, value) => {
-        if (!value.trim()) return;
-        addTaskMutation.mutate({ title: value.trim(), status, createdBy: user.email });
-        setTaskInputs((prev) => ({ ...prev, [status]: "" }));
+    const handleAddTask = (status, title, description) => {
+        if (!title.trim()) return;
+        addTaskMutation.mutate({
+            title: title.trim(),
+            description: description.trim(),
+            status,
+            createdBy: user.email,
+        });
     };
+
 
     const handleDragEnd = ({ active, over }) => {
         if (!over || active.id === over.id) return;

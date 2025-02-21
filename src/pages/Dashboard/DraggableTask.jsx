@@ -21,10 +21,11 @@ const DraggableTask = ({ task }) => {
             {...listeners}
             {...attributes}
             style={style}
-            className="bg-white p-3 rounded-lg shadow-sm hover:shadow-md transition"
+            className="bg-white p-3 rounded-lg shadow-sm hover:shadow-md transition space-y-2"
         >
-            <p className="font-medium">{task.title}</p>
-            <p className="text-sm text-gray-500 mt-1">Created: {formattedDate}</p>
+            <p className="text-xl font-bold">{task.title}</p>
+            <p className="text-sm">{task.description}</p>
+            <p className="text-xs text-gray-500 mt-1">Created: {formattedDate}</p>
         </div>
     );
 };
