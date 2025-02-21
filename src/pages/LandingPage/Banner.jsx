@@ -13,10 +13,9 @@ const Banner = () => {
                 title: "Login Required",
                 text: "Please login or register to access the dashboard.",
                 confirmButtonText: "Go to Login",
-                confirmButtonColor: "#10B981", // Green color to match the theme
+                confirmButtonColor: "#10B981", 
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Redirect to the login page
                     window.location.href = "/login";
                 }
             });
@@ -31,13 +30,14 @@ const Banner = () => {
                 initial={{ opacity: 0, y: -50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
-                className="text-center px-4"
+                className="text-center py-6 px-4 mt-20"
             >
                 <h1 className="text-5xl font-bold mb-6 text-gray-800">
                     Organize Your Tasks Effortlessly
                 </h1>
                 <p className="text-lg text-gray-600 mb-8">
-                    Manage your tasks with ease using our drag-and-drop interface. Categorize tasks into To-Do, In Progress, and Done. All changes are saved instantly!
+                    Manage your tasks with ease using our drag-and-drop interface. Categorize tasks into To-Do, 
+                    In Progress, and Done. All changes are saved instantly!
                 </p>
                 {user ? (
                     <Link to="/dashboard">

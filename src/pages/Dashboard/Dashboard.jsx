@@ -6,13 +6,15 @@ import { motion } from "framer-motion";
 import logo from "../../assets/logo/icons8-reminders-50.png";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 
 const Dashboard = ({ title }) => {
     const { user, logOut } = useAuth();
     const axiosSecure = useAxiosSecure();
     const queryClient = useQueryClient();
+
+    const [sidebarOpen, setSidebarOpen] = useState(false);
 
     // Fetch tasks using polling
     const { data: tasks = [] } = useQuery({
@@ -32,7 +34,7 @@ const Dashboard = ({ title }) => {
             } catch (error) {
                 console.error("Error fetching tasks:", error);
             }
-        }, 5000); 
+        }, 5000);
 
         // Cleanup interval on component unmount
         return () => clearInterval(pollingInterval);
@@ -95,7 +97,7 @@ const Dashboard = ({ title }) => {
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5 }}
-                className="w-64 bg-white shadow-lg p-6"
+                className={`w-64 bg-white shadow-lg p-6 fixed top-0 left-0 h-full z-50 md:block ${sidebarOpen ? "block" : "hidden"} md:flex md:flex-col`}
             >
                 <div className="flex flex-col space-y-6">
                     {/* Logo */}
@@ -120,7 +122,7 @@ const Dashboard = ({ title }) => {
             </motion.div>
 
             {/* Main Content Area */}
-            <div className="flex-1 flex flex-col">
+            <div className="flex-1 flex flex-col md:ml-64">
                 {/* Header */}
                 <motion.header
                     initial={{ opacity: 0, y: -50 }}
@@ -129,9 +131,9 @@ const Dashboard = ({ title }) => {
                     className="bg-white shadow-sm px-6 py-4"
                 >
                     <div className="flex justify-between items-center">
-                        <h1 className="text-2xl font-bold text-gray-800">Welcome, {user?.displayName}!</h1>
+                        <h1 className="text-lg md:text-2xl  font-bold text-gray-800">Welcome, {user?.displayName}!</h1>
                         <div className="flex items-center space-x-4">
-                            <span className="text-gray-700">{user?.email}</span>
+                            <span className="text-gray-700 hidden md:block">{user?.email}</span>
                             <img
                                 src={user?.photoURL}
                                 alt="Profile"
@@ -176,6 +178,16 @@ const Dashboard = ({ title }) => {
                     <Outlet />
                 </motion.main>
             </div>
+
+            {/* Mobile Menu Button */}
+            <button
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+                className="md:hidden fixed top-4 left-4 z-50 text-gray-700 bg-white p-3 rounded-full shadow-lg"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
         </div>
     );
 };
