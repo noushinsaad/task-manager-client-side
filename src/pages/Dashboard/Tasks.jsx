@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
-import { io } from "socket.io-client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import DroppableColumn from "./DroppableColumn";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
-
-const socket = io("http://localhost:5000", { withCredentials: true });
-// const socket = io("https://task-management-server-site-pvonlwphr-saads-projects-002d07dd.vercel.app", { withCredentials: true });
 
 const Tasks = () => {
     const { user } = useAuth();
@@ -15,6 +11,7 @@ const Tasks = () => {
     const axiosSecure = useAxiosSecure();
     const queryClient = useQueryClient();
 
+    // Fetch tasks using polling
     const { data: tasks = [], isLoading, isError } = useQuery({
         queryKey: ["tasks", user?.email],
         queryFn: async () => {
@@ -22,6 +19,21 @@ const Tasks = () => {
             return response.data;
         },
     });
+
+    // Polling logic
+    useEffect(() => {
+        const pollingInterval = setInterval(async () => {
+            try {
+                const response = await axiosSecure.get(`tasks/${user.email}`);
+                queryClient.setQueryData(["tasks", user?.email], response.data);
+            } catch (error) {
+                console.error("Error fetching tasks:", error);
+            }
+        }, 5000); // Poll every 5 seconds
+
+        // Cleanup interval on component unmount
+        return () => clearInterval(pollingInterval);
+    }, [axiosSecure, queryClient, user?.email]);
 
     const addTaskMutation = useMutation({
         mutationFn: (task) => axiosSecure.post("/tasks", task),
@@ -33,13 +45,6 @@ const Tasks = () => {
         onSuccess: () => queryClient.invalidateQueries(["tasks"]),
     });
 
-    useEffect(() => {
-        socket.on("tasksUpdated", (updatedTasks) => {
-            queryClient.setQueryData(["tasks"], updatedTasks);
-        });
-        return () => socket.off("tasksUpdated");
-    }, [queryClient]);
-
     const handleAddTask = (status, title, description) => {
         if (!title.trim()) return;
         addTaskMutation.mutate({
@@ -49,7 +54,6 @@ const Tasks = () => {
             createdBy: user.email,
         });
     };
-
 
     const handleDragEnd = ({ active, over }) => {
         if (!over || active.id === over.id) return;

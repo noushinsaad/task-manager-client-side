@@ -5,21 +5,16 @@ import Swal from "sweetalert2";
 import { motion } from "framer-motion";
 import logo from "../../assets/logo/icons8-reminders-50.png";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { io } from "socket.io-client";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useEffect } from "react";
 import { Helmet } from "react-helmet";
 
-const Dashboard = ({title}) => {
+const Dashboard = ({ title }) => {
     const { user, logOut } = useAuth();
     const axiosSecure = useAxiosSecure();
     const queryClient = useQueryClient();
 
-    const socket = io("http://localhost:5000", { withCredentials: true });
-    // const socket = io("https://task-management-server-site-pvonlwphr-saads-projects-002d07dd.vercel.app", { withCredentials: true });
-
-    
-
+    // Fetch tasks using polling
     const { data: tasks = [] } = useQuery({
         queryKey: ["tasks", user?.email],
         queryFn: async () => {
@@ -28,43 +23,52 @@ const Dashboard = ({title}) => {
         },
     });
 
+    // Polling logic
     useEffect(() => {
-        socket.on("tasksUpdated", (updatedTasks) => {
-            queryClient.setQueryData(["tasks", user?.email], updatedTasks);
-        });
+        const pollingInterval = setInterval(async () => {
+            try {
+                const response = await axiosSecure.get(`tasks/${user.email}`);
+                queryClient.setQueryData(["tasks", user?.email], response.data);
+            } catch (error) {
+                console.error("Error fetching tasks:", error);
+            }
+        }, 5000); 
 
-        return () => socket.off("tasksUpdated");
-    }, [queryClient, user?.email]);
+        // Cleanup interval on component unmount
+        return () => clearInterval(pollingInterval);
+    }, [axiosSecure, queryClient, user?.email]);
 
     const pendingTasksCount = tasks.filter((task) => task.status === "todo").length;
     const ongoingTasksCount = tasks.filter((task) => task.status === "in-progress").length;
 
-    const links = <>
-        <NavLink
-            to="/dashboard"
-            className="text-gray-700 hover:text-green-600 transition-colors duration-300"
-        >
-            Overview
-        </NavLink>
-        <NavLink
-            to="/dashboard/tasks"
-            className="text-gray-700 hover:text-green-600 transition-colors duration-300"
-        >
-            Tasks
-        </NavLink>
-        <NavLink
-            to="/dashboard/projects"
-            className="text-gray-700 hover:text-green-600 transition-colors duration-300"
-        >
-            Projects
-        </NavLink>
-        <NavLink
-            to="/dashboard/settings"
-            className="text-gray-700 hover:text-green-600 transition-colors duration-300"
-        >
-            Settings
-        </NavLink>
-    </>
+    const links = (
+        <>
+            <NavLink
+                to="/dashboard"
+                className="text-gray-700 hover:text-green-600 transition-colors duration-300"
+            >
+                Overview
+            </NavLink>
+            <NavLink
+                to="/dashboard/tasks"
+                className="text-gray-700 hover:text-green-600 transition-colors duration-300"
+            >
+                Tasks
+            </NavLink>
+            <NavLink
+                to="/dashboard/projects"
+                className="text-gray-700 hover:text-green-600 transition-colors duration-300"
+            >
+                Projects
+            </NavLink>
+            <NavLink
+                to="/dashboard/settings"
+                className="text-gray-700 hover:text-green-600 transition-colors duration-300"
+            >
+                Settings
+            </NavLink>
+        </>
+    );
 
     const handleSignOut = () => {
         logOut()
