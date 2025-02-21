@@ -1,11 +1,43 @@
+/* eslint-disable react/prop-types */
 import { Link, NavLink, Outlet } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
 import logo from "../../assets/logo/icons8-reminders-50.png";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { io } from "socket.io-client";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useEffect } from "react";
+import { Helmet } from "react-helmet";
 
-const Dashboard = () => {
+const Dashboard = ({title}) => {
     const { user, logOut } = useAuth();
+    const axiosSecure = useAxiosSecure();
+    const queryClient = useQueryClient();
+
+    const socket = io("http://localhost:5000", { withCredentials: true });
+    // const socket = io("https://task-management-server-site-pvonlwphr-saads-projects-002d07dd.vercel.app", { withCredentials: true });
+
+    
+
+    const { data: tasks = [] } = useQuery({
+        queryKey: ["tasks", user?.email],
+        queryFn: async () => {
+            const response = await axiosSecure.get(`tasks/${user.email}`);
+            return response.data;
+        },
+    });
+
+    useEffect(() => {
+        socket.on("tasksUpdated", (updatedTasks) => {
+            queryClient.setQueryData(["tasks", user?.email], updatedTasks);
+        });
+
+        return () => socket.off("tasksUpdated");
+    }, [queryClient, user?.email]);
+
+    const pendingTasksCount = tasks.filter((task) => task.status === "todo").length;
+    const ongoingTasksCount = tasks.filter((task) => task.status === "in-progress").length;
 
     const links = <>
         <NavLink
@@ -50,6 +82,10 @@ const Dashboard = () => {
 
     return (
         <div className="min-h-screen flex bg-gradient-to-br from-green-100 to-green-200">
+            <Helmet>
+                <title>{title || "Dashboard | TickTack"}</title>
+            </Helmet>
+
             {/* Sidebar */}
             <motion.div
                 initial={{ opacity: 0, x: -50 }}
@@ -111,8 +147,8 @@ const Dashboard = () => {
                     <div className="text-white">
                         <h2 className="text-3xl font-bold mb-4">Welcome Back, {user?.displayName}!</h2>
                         <p className="text-lg mb-6">
-                            You have <span className="font-semibold">3 pending tasks</span> and{" "}
-                            <span className="font-semibold">2 ongoing projects</span>. Keep up the great work!
+                            You have <span className="font-semibold">{pendingTasksCount} pending tasks</span> and{" "}
+                            <span className="font-semibold">{ongoingTasksCount} ongoing tasks</span>. Keep up the great work!
                         </p>
                         <Link to="/dashboard/tasks">
                             <motion.button
@@ -133,7 +169,7 @@ const Dashboard = () => {
                     transition={{ duration: 0.5, delay: 0.6 }}
                     className="flex-1 p-8 overflow-y-auto"
                 >
-                    <Outlet /> {/* This will render nested routes */}
+                    <Outlet />
                 </motion.main>
             </div>
         </div>
