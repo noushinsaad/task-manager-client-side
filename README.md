@@ -1,53 +1,67 @@
-📝 Task Management Application
-A modern, feature-rich task management application that allows users to add, edit, delete, and reorder tasks using a drag-and-drop interface. Tasks are categorized into three sections: To-Do, In Progress, and Done. All changes are saved instantly to the database for a seamless experience.
+# 📝 Task Management Application  
 
-🚀 Live Demo
-🔗 Live Application (Update this with your live link)
+A modern, feature-rich task management application that allows users to add, edit, delete, and reorder tasks using a drag-and-drop interface. Tasks are categorized into three sections: **To-Do, In Progress, and Done**. All changes are saved instantly to the database for a seamless experience.  
 
-📖 Table of Contents
-Features
-Tech Stack
-Installation
-Folder Structure
-Usage
-Contributing
-License
-Acknowledgements
-🎯 Features
-✅ Task Management: Add, edit, and delete tasks.
-✅ Drag-and-Drop: Easily reorder tasks within sections using a smooth drag-and-drop interface.
-✅ Real-time Updates: Changes sync instantly with the database.
-✅ Responsive Design: Fully optimized for desktop and mobile users.
-✅ Modern UI: Clean and minimalistic design with an intuitive user experience.
+## 🚀 Live Demo  
+🔗 [Live Application](#) *(Update this with your live link)*  
 
-🛠 Tech Stack
-Frontend
-React – JavaScript library for building UI
-Vite – Fast build tool and development server
-Tailwind CSS – Utility-first CSS framework for responsive design
-DaisyUI – Pre-styled Tailwind components
-React Query – For handling API requests and caching
-@dnd-kit – Drag-and-drop functionality
-Socket.io – Real-time communication
-React Router – Navigation between views
-SweetAlert2 – Interactive alerts
-Backend
-Node.js – Server-side runtime
-Express.js – Web framework for building RESTful APIs
-MongoDB – NoSQL database for storing tasks
-📥 Installation
-Prerequisites
-Ensure that you have the following installed:
+---
 
-Node.js (version 16 or higher)
-MongoDB (or use a cloud service like MongoDB Atlas)
-Vite (for development)
-Steps to Install
-1️⃣ Clone the repository:
+## 📖 Table of Contents  
 
-bash
-Copy
-Edit
+- [Features](#features)  
+- [Tech Stack](#tech-stack)  
+- [Installation](#installation)  
+- [Folder Structure](#folder-structure)  
+- [Usage](#usage)  
+- [Contributing](#contributing)  
+- [License](#license)  
+- [Acknowledgements](#acknowledgements)  
+
+---
+
+## 🎯 Features  
+
+✅ **Task Management:** Add, edit, and delete tasks.  
+✅ **Drag-and-Drop:** Easily reorder tasks within sections using a smooth drag-and-drop interface.  
+✅ **Real-time Updates:** Changes sync instantly with the database.  
+✅ **Responsive Design:** Fully optimized for desktop and mobile users.  
+✅ **Modern UI:** Clean and minimalistic design with an intuitive user experience.  
+
+---
+
+## 🛠 Tech Stack  
+
+### **Frontend**  
+- **React** – JavaScript library for building UI  
+- **Vite** – Fast build tool and development server  
+- **Tailwind CSS** – Utility-first CSS framework for responsive design  
+- **DaisyUI** – Pre-styled Tailwind components  
+- **React Query** – For handling API requests and caching  
+- **@dnd-kit** – Drag-and-drop functionality  
+- **Socket.io** – Real-time communication  
+- **React Router** – Navigation between views  
+- **SweetAlert2** – Interactive alerts  
+
+### **Backend**  
+- **Node.js** – Server-side runtime  
+- **Express.js** – Web framework for building RESTful APIs  
+- **MongoDB** – NoSQL database for storing tasks  
+
+---
+
+## 📥 Installation  
+
+### **Prerequisites**  
+Ensure that you have the following installed:  
+- **Node.js** (version 16 or higher)  
+- **MongoDB** (or use a cloud service like MongoDB Atlas)  
+- **Vite** (for development)  
+
+### **Steps to Install**  
+
+1️⃣ Clone the repository:  
+```bash
 git clone https://github.com/your-username/task-manager-client-side.git
 cd task-manager-client-side
 2️⃣ Install dependencies:
@@ -130,4 +144,3 @@ DaisyUI
 @dnd-kit
 Socket.io
 SweetAlert2
-Let me know if you'd like any further refinements! 🚀
