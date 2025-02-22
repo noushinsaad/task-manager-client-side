@@ -10,12 +10,13 @@ import PrivateRoutes from "./PrivateRoutes";
 import Tasks from "../pages/Dashboard/Tasks";
 import Projects from "../pages/Dashboard/Projects";
 import Settings from "../pages/Dashboard/Settintgs";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
 
 const Routes = createBrowserRouter([
     {
         path: '/',
         element: <Home></Home>,
-        errorElement: <h2>Error</h2>,
+        errorElement: <ErrorPage></ErrorPage>,
         children: [
             {
                 path: '/',
@@ -44,8 +45,8 @@ const Routes = createBrowserRouter([
                 element: <Projects></Projects>
             },
             {
-                path:'settings',
-                element:<Settings></Settings>
+                path: 'settings',
+                element: <Settings></Settings>
             }
         ]
     }
