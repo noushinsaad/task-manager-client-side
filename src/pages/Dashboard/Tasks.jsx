@@ -20,6 +20,13 @@ const Tasks = () => {
         queryFn: async () => (await axiosSecure.get(`tasks/${user.email}`)).data,
     });
 
+    const { data: activityLogs = [] } = useQuery({
+        queryKey: ["activityLogs", user?.email],
+        queryFn: async () => (await axiosSecure.get(`activityLogs/${user.email}`)).data,
+        enabled: !!user?.email, // Ensures the query runs only when user email is available
+    });
+
+
     const addTaskMutation = useMutation({
         mutationFn: (task) => axiosSecure.post("/tasks", task),
         onSuccess: () => queryClient.invalidateQueries(["tasks"]),
@@ -43,7 +50,7 @@ const Tasks = () => {
         updateTaskMutation.mutate({ taskId, data });
     };
 
-    
+
     const handleDeleteTask = (taskId) => {
         Swal.fire({
             title: "Are you sure?",
@@ -73,6 +80,7 @@ const Tasks = () => {
         const draggedTask = tasks.find((task) => task._id === active.id);
         if (draggedTask && draggedTask.status !== over.id) {
             handleUpdateTask(active.id, { status: over.id });
+            console.log(active.id)
         }
     };
 
@@ -97,6 +105,31 @@ const Tasks = () => {
                     ))}
                 </div>
             </DndContext>
+            <div className="mt-6 p-4 bg-gray-100 rounded-lg">
+                <h3 className="text-xl font-semibold text-gray-700">Activity Logs</h3>
+                <ul className="mt-2 space-y-2">
+                    {activityLogs.length > 0 ? (
+                        activityLogs.map((log, index) => (
+                            <li key={index} className="p-2 bg-white shadow rounded-md">
+                                <div>
+                                    <p>{log.message}</p>
+                                    <p className="text-sm opacity-80">{
+                                        new Date(log.updatedAt).toLocaleString("en-GB", {
+                                            day: "2-digit",
+                                            month: "short",
+                                            year: "numeric",
+                                            hour: "2-digit",
+                                            minute: "2-digit",
+                                        })
+                                    }</p>
+                                </div>
+                            </li>
+                        ))
+                    ) : (
+                        <p className="text-gray-500">No recent activity.</p>
+                    )}
+                </ul>
+            </div>
         </div>
     );
 };
